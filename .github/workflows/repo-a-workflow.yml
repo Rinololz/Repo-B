@@ -1,0 +1,19 @@
+name: Repo A Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-repo-b:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Repo B Workflow
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.REPO_B_PAT }}" \
+            https://api.github.com/repos/USERNAME/REPO_B/dispatches \
+            -d '{"event_type":"custom-event"}'
